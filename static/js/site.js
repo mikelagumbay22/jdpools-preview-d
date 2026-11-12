@@ -100,6 +100,27 @@
 })();
 
 (() => {
+  const video = document.querySelector("[data-hero-video]");
+  if (!video) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const slow = !!(conn && (conn.saveData || conn.effectiveType === "slow-2g" || conn.effectiveType === "2g" || (typeof conn.downlink === "number" && conn.downlink > 0 && conn.downlink < 1.2)));
+  if (reduce || slow) return;
+  const mobile = matchMedia("(max-width: 699px)").matches;
+  const add = (type, attr) => {
+    const source = document.createElement("source");
+    source.type = type;
+    source.src = video.getAttribute(attr);
+    video.appendChild(source);
+  };
+  add("video/webm", mobile ? "data-mobile-webm" : "data-desktop-webm");
+  add("video/mp4", mobile ? "data-mobile-mp4" : "data-desktop-mp4");
+  video.addEventListener("canplay", () => video.classList.add("is-ready"), { once: true });
+  video.addEventListener("loadeddata", () => { video.play().catch(() => {}); }, { once: true });
+  video.load();
+})();
+
+(() => {
   // Preview host has no form backend. Validate with the browser, then show the thanks page.
   document.querySelectorAll('form[name="project-inquiry"]').forEach((form) => {
     form.addEventListener('submit', (event) => {
