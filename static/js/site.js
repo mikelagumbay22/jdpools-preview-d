@@ -22,6 +22,84 @@
 })();
 
 (() => {
+  const prefersReduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const initCompare = (root) => {
+    const frame = root.querySelector("[data-ba-frame]");
+    const handle = root.querySelector("[data-ba-handle]");
+    if (!frame || !handle) return;
+    let pos = 50;
+    let dragging = false;
+
+    const set = (value) => {
+      pos = Math.min(100, Math.max(0, value));
+      root.style.setProperty("--ba-pos", pos + "%");
+      const rounded = Math.round(pos);
+      handle.setAttribute("aria-valuenow", String(rounded));
+      handle.setAttribute("aria-valuetext", rounded + " percent");
+    };
+
+    const fromEvent = (event) => {
+      const point = event.touches ? event.touches[0] : event;
+      const box = frame.getBoundingClientRect();
+      if (!box.width) return pos;
+      return ((point.clientX - box.left) / box.width) * 100;
+    };
+
+    frame.addEventListener("pointerdown", (event) => {
+      if (event.button !== undefined && event.button !== 0) return;
+      dragging = true;
+      frame.setPointerCapture(event.pointerId);
+      set(fromEvent(event));
+    });
+    frame.addEventListener("pointermove", (event) => {
+      if (!dragging) return;
+      set(fromEvent(event));
+    });
+    const stop = () => { dragging = false; };
+    frame.addEventListener("pointerup", stop);
+    frame.addEventListener("pointercancel", stop);
+
+    handle.addEventListener("keydown", (event) => {
+      const step = event.shiftKey ? 10 : 5;
+      if (event.key === "ArrowLeft" || event.key === "ArrowDown") { event.preventDefault(); set(pos - step); }
+      else if (event.key === "ArrowRight" || event.key === "ArrowUp") { event.preventDefault(); set(pos + step); }
+      else if (event.key === "Home") { event.preventDefault(); set(0); }
+      else if (event.key === "End") { event.preventDefault(); set(100); }
+    });
+
+    set(prefersReduce ? 50 : 50);
+  };
+
+  const initTabs = (section) => {
+    const tabs = [...section.querySelectorAll('[role="tab"]')];
+    if (!tabs.length) return;
+    const select = (tab) => {
+      tabs.forEach((item) => {
+        const on = item === tab;
+        item.setAttribute("aria-selected", on ? "true" : "false");
+        const panel = document.getElementById(item.getAttribute("aria-controls"));
+        if (panel) panel.hidden = !on;
+      });
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        let next = null;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") next = tabs[(index + 1) % tabs.length];
+        if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = tabs[(index - 1 + tabs.length) % tabs.length];
+        if (event.key === "Home") next = tabs[0];
+        if (event.key === "End") next = tabs[tabs.length - 1];
+        if (next) { event.preventDefault(); next.focus(); select(next); }
+      });
+    });
+  };
+
+  document.querySelectorAll("[data-ba]").forEach(initCompare);
+  document.querySelectorAll(".ba-section").forEach(initTabs);
+})();
+
+(() => {
   // Preview host has no form backend. Validate with the browser, then show the thanks page.
   document.querySelectorAll('form[name="project-inquiry"]').forEach((form) => {
     form.addEventListener('submit', (event) => {

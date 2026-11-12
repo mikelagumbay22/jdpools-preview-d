@@ -95,3 +95,37 @@ p{margin:0 0 1em;max-width:65ch}
 @media(max-width:1050px){:root{--header:76px}.brand__mark{width:44px;height:44px}.brand__name{font-size:16px}.brand__name em{font-size:9px}.nav__toggle{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;margin-right:-10px;background:none;border:0;cursor:pointer}.nav__bars,.nav__bars::before,.nav__bars::after{display:block;width:25px;height:2px;background:#fff;position:relative;transition:transform .25s}.nav__bars::before,.nav__bars::after{content:"";position:absolute;left:0}.nav__bars::before{top:-8px}.nav__bars::after{top:8px}[aria-expanded=true] .nav__bars{background:transparent}[aria-expanded=true] .nav__bars::before{transform:translateY(8px) rotate(45deg)}[aria-expanded=true] .nav__bars::after{transform:translateY(-8px) rotate(-45deg)}.nav__list{position:fixed;inset:var(--header) 0 0 auto;width:min(320px,86vw);background:var(--navy-deep);padding:24px var(--gut) 35px;display:none;flex-direction:column;align-items:stretch;gap:0;box-shadow:-10px 12px 30px rgba(0,0,0,.18)}.nav__list.is-open{display:flex}.nav__list li{border-bottom:1px solid rgba(255,255,255,.14)}.nav__list a:not(.btn){display:block;padding:17px 0;font-size:14px}.nav__cta{border:0!important;padding-top:25px;margin:0}.nav__cta .btn{width:100%;min-height:52px}.phero{min-height:500px}.phero__media{left:0;opacity:.6}.phero__media::after{background:linear-gradient(90deg,rgba(36,47,71,.94),rgba(36,47,71,.54)),linear-gradient(0deg,rgba(23,33,55,.5),transparent)}.phero .display{max-width:18ch}.intro-collage{min-height:520px;max-width:580px}.section-head{display:block}.section-head .btnrow{margin-top:20px}.section-head>p{margin-top:12px}.contact__direct{padding:28px}}
 @media(max-width:699px){:root{--gut:20px;--sp:72px}.heroD__text{padding-bottom:52px}.heroD .display{font-size:clamp(43px,12.5vw,57px);max-width:12ch}.heroD .lede{font-size:13px;line-height:1.65;max-width:37ch}.heroD .eyebrow{font-size:10px}.heroD .btn{width:100%;max-width:330px}.heroD__media img{object-position:50% 50%!important}.phero{min-height:455px}.phero__text{padding-block:50px}.phero .lede{font-size:13px;max-width:36ch}.phero .display{font-size:39px}.phero__media{opacity:.48}.intro-collage{min-height:0;height:auto;padding-bottom:22px;margin-right:0}.intro-collage__main{position:relative!important;width:85%;aspect-ratio:4/5!important;border-radius:0 0 70px 0}.intro-collage__detail{width:54%;aspect-ratio:1/1!important;border-width:7px;border-radius:45px 0 0 0;margin-top:-105px}.home-intro .intro__grid{gap:48px}.intro__big{font-size:28px}.intro__body{font-size:14px}.script{font-size:37px}.split{gap:32px}.split__media .photo{border-radius:0 55px 0 0}.polaroids{padding-inline:0;gap:32px}.polaroid{padding:20px 20px 22px}.polaroid .photo{aspect-ratio:4/3!important}.polaroid figcaption{font-size:25px;padding:17px 0 34px}.polaroid figcaption span:last-child{font-size:21px}.story-copy{padding:38px 24px}.story-photo{min-height:340px}.story-photo .photo{aspect-ratio:4/3!important}.story-steps li{padding:18px 0}.possible .section-head .btn{width:100%}.stage-timeline{gap:36px}.stage:nth-child(2){margin-top:0}.svc__media .photo{border-radius:0 45px 0 0}.contact__direct{padding:25px 20px}.checks{grid-template-columns:1fr 1fr}.checks--inline{grid-template-columns:1fr}.cta__in{text-align:left}.cta__in .btnrow{justify-content:flex-start}.cta__in p{margin-inline:0}.areas__grid{grid-template-columns:1fr 1fr;gap:28px 20px}.areas__h{font-size:10px}.areas ul{font-size:18px}.ftr__base{display:block}.ftr__base p+p{margin-top:8px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* Before/after compare — original control, no third-party library */
+.ba-section{padding-block:var(--sp);background:var(--warm)}
+.ba-note{font-size:13px;color:var(--muted);max-width:65ch;margin:0 0 28px}
+.ba-tabs{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
+.ba-tab{min-height:44px;padding:0 18px;border:1px solid var(--navy);background:transparent;color:var(--navy);font:500 11px/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.ba-tab[aria-selected="true"]{background:var(--navy);color:#fff}
+.ba-tab:hover{background:var(--navy);color:#fff}
+.ba{margin:0;--ba-pos:50%}
+.ba__frame{position:relative;aspect-ratio:4/3;overflow:hidden;touch-action:none;cursor:ew-resize;background:#1a2233;user-select:none}
+.ba__layer,.ba__layer .photo{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto!important;margin:0}
+.ba__layer .photo img{width:100%;height:100%;object-fit:fill;object-position:50% 50%!important;max-width:none;pointer-events:none}
+.ba__before{z-index:1;clip-path:inset(0 calc(100% - var(--ba-pos)) 0 0)}
+.ba__after{z-index:0}
+.ba__handle{position:absolute;top:0;bottom:0;left:var(--ba-pos);z-index:2;width:44px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;padding:0;border:0;background:transparent;cursor:ew-resize;color:inherit}
+.ba__bar{position:absolute;inset:0 auto;left:50%;width:2px;transform:translateX(-50%);background:#fff;box-shadow:0 0 0 1px rgba(23,33,55,.2)}
+.ba__knob{position:relative;width:44px;height:44px;border-radius:50%;background:var(--navy);border:2px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.28);flex-shrink:0}
+.ba__knob::before,.ba__knob::after{content:"";position:absolute;top:50%;width:0;height:0;border-style:solid;transform:translateY(-50%)}
+.ba__knob::before{left:10px;border-width:6px 7px 6px 0;border-color:transparent #fff transparent transparent}
+.ba__knob::after{right:10px;border-width:6px 0 6px 7px;border-color:transparent transparent transparent #fff}
+.ba__label{position:absolute;z-index:3;top:16px;padding:5px 10px;background:rgba(23,33,55,.78);color:#fff;font:500 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
+.ba__label--before{left:16px}
+.ba__label--after{right:16px}
+.ba figcaption{margin:14px 0 0;font:500 22px/1.2 var(--script);color:var(--navy)}
+@media(prefers-reduced-motion:reduce){
+  .ba__before,.ba__handle{transition:none}
+}
+@media(max-width:699px){
+  .ba-tab{width:100%}
+  .ba__label{top:12px;padding:5px 8px}
+  .ba__label--before{left:12px}
+  .ba__label--after{right:12px}
+  .ba figcaption{font-size:20px}
+}
