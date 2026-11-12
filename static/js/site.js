@@ -119,16 +119,3 @@
   video.addEventListener("loadeddata", () => { video.play().catch(() => {}); }, { once: true });
   video.load();
 })();
-
-(() => {
-  // Preview host has no form backend. Validate with the browser, then show the thanks page.
-  document.querySelectorAll('form[name="project-inquiry"]').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      if (!form.checkValidity()) return;
-      event.preventDefault();
-      const honeypot = form.querySelector('[name="bot-field"]');
-      if (honeypot && honeypot.value) return;
-      window.location.assign('thanks.html');
-    });
-  });
-})();
