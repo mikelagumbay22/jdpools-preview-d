@@ -131,3 +131,18 @@ p{margin:0 0 1em;max-width:65ch}
 }
 
 @media(prefers-reduced-motion:reduce){.heroD__video{display:none!important;opacity:0}}
+
+/* Discreet credit on demo-still (concept) photos only. */
+.photo[data-src="concept"]{position:relative}
+.photo[data-src="concept"]::after{
+  content:"Concept image";
+  position:absolute;right:8px;bottom:8px;z-index:2;
+  font:500 9px/1 var(--sans,sans-serif);
+  letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;background:rgba(20,24,32,.48);
+  padding:4px 7px;border-radius:2px;pointer-events:none;
+}
+@media (max-width:699px){
+  .svc-item .photo[data-src="concept"]::after,.photo--sm[data-src="concept"]::after{font-size:8px;padding:3px 5px}
+}
+.row__img .photo[data-src="concept"]::after{content:none}
